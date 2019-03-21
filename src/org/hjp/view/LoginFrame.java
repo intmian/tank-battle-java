@@ -15,14 +15,14 @@ public class LoginFrame extends JFrame {
 	private JMenuItem jmi3 = new JMenuItem("排行榜");
 	private JMenuItem jmi4 = new JMenuItem("自定义");
 	private JMenuItem jmi5 = new JMenuItem("退出");
-	
+
 	private JMenu jm2 = new JMenu("帮助");
 	private JMenuItem jmi01 = new JMenuItem("游戏说明");
 
 	public LoginFrame() {
 		jmi1.setActionCommand("start");
 		jm.add(jmi1);
-		jm.addSeparator();//分隔线
+		jm.addSeparator();// 分隔线
 		jm.add(jmi2);
 		jm.addSeparator();
 		jm.add(jmi3);
@@ -32,15 +32,13 @@ public class LoginFrame extends JFrame {
 		jmi1.setActionCommand("Exit");
 		jm.add(jmi5);
 		jm2.add(jmi01);
-		
+
 		jmb.add(jm);
 		jmb.add(jm2);
 		this.setJMenuBar(jmb);
-		
-		
-		
+
 		this.add(hop);
-		this.setTitle("单机版坦克大战_JF190103_洪居平");// 设置面板的标题
+		this.setTitle("单机版坦克大战_mian");// 设置面板的标题
 		this.setResizable(false);// 让界面不能最大化以及修改大小
 		this.pack(); // 根据jpanel的大小来设置jframe的大小
 		this.setVisible(true);// 让面板显示出来
@@ -50,7 +48,7 @@ public class LoginFrame extends JFrame {
 
 	public LoginPanel getHop() {
 		return hop;
-		
+
 	}
 
 	public void setHop(LoginPanel hop) {
