@@ -26,8 +26,6 @@ public class Bullet {
 		this.bdir = bdir;
 		this.dictance = dictance;
 		this.kind = kind;
-		System.out.println(by);
-		System.out.println(dictance);
 	}
 
 	public void move() { // 子弹移动的方法
@@ -60,14 +58,15 @@ public class Bullet {
 			}
 		} else // 敌人的子弹
 		{
-			for (BaseTank my_tank : Demo.game.list) { // 是否会被敌人攻击致死
-				Rectangle r1 = new Rectangle(my_tank.getTx(), my_tank.getTy(), 40, 40);
-				if (r2.intersects(r1) == true) {
-					by = 1000; // 子弹消失
-					bx = 1000;
-					my_tank.die();
-					return;
-				}
+			BaseTank my_tank = Demo.game.list.get(0);
+			Rectangle r1 = new Rectangle(my_tank.getTx(), my_tank.getTy(), 40, 40);
+			if (r2.intersects(r1) == true) {
+				by = 1000; // 子弹消失
+				bx = 1000;
+				System.out.println(bullet.bx);
+				System.out.println(bullet.by);
+				my_tank.die();
+				return;
 			}
 		}
 		for (int i = 0; i < map.length; i++) {
@@ -98,6 +97,7 @@ public class Bullet {
 						bx = 1000;
 						map[i][j] = 0;
 						Demo.controler.fail(); // 老巢被引爆 失败
+						return;
 					}
 				}
 

@@ -47,7 +47,7 @@ public class EnemyTank { // 敌人坦克类
 			this.edictance = 1;
 			break;
 		case 2: // 捍卫者
-			hp = 2;
+			hp = 3;
 			attack = 1;
 			attack_rate = 10;
 			this.edictance = 1;
@@ -168,8 +168,36 @@ public class EnemyTank { // 敌人坦克类
 			edir = random.nextInt(4); // 转向
 		}
 		dir_change_last--;
-		if (x <= 1 || x >= 599 - 40 || y <= 1 || y >= 599)
-			return;
+		if (x <= 0 + edictance) {
+			if (edir == 2) {
+				x += 1;
+				edir = 3;
+				return;
+			}
+		}
+		if (x >= 600 - edictance - 40) {
+			if (edir == 3) {
+				x -= 1;
+				edir = 2;
+				return;
+			}
+		}
+		if (y <= edictance) {
+			if (edir == 0) {
+				edir = 1;
+				y -= 1;
+				return;
+			}
+
+		}
+		if (y >= 600 - edictance) {
+			if (edir == 1) {
+				y += 1;
+				edir = 0;
+				return;
+			}
+
+		}
 		Rectangle r2 = new Rectangle(x - edictance, y - edictance, 40 + 2 * edictance, 40 + 2 * edictance); // 外围碰撞框
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++) {
@@ -182,18 +210,30 @@ public class EnemyTank { // 敌人坦克类
 						if (newy + 40 <= y && edir == 0 && newx - x > -40 && newx - x < 40) // 上部碰撞
 						{
 							y = newy + 40; // 移动到障碍物下沿，避免撞见空气墙或者卡进去
+							dir_change_last = 50;
+							Random random = new Random();
+							edir = random.nextInt(4); // 转向
 							return;
 						}
 						if (newy - 40 >= y && edir == 1 && newx - x > -40 && newx - x < 40) {
 							y = newy - 40;
+							dir_change_last = 50;
+							Random random = new Random();
+							edir = random.nextInt(4); // 转向
 							return;
 						}
 						if (newx + 40 <= x && edir == 2 && newy - y > -40 && newy - y < 40) {
 							x = newx + 40;
+							dir_change_last = 50;
+							Random random = new Random();
+							edir = random.nextInt(4); // 转向
 							return;
 						}
 						if (newx - 40 >= x && edir == 3 && newy - y > -40 && newy - y < 40) {
 							x = newx - 40;
+							dir_change_last = 50;
+							Random random = new Random();
+							edir = random.nextInt(4); // 转向
 							return;
 						}
 					}

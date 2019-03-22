@@ -11,10 +11,13 @@ public class Controler { // 关卡得分配置;
 	int assa_num; // 偷袭者人数
 	int attck_num; // 狙击手人数
 	int stage; // 目前属于的关卡
-	int grade = 0;
-	int kill_num = 0;
+	public int grade = 0;
+	public int kill_num = 0;
 	int grade_stage = 0;
 	int kill_stage = 0;
+	public boolean painting = false;
+	public boolean jumping = false;
+
 	public boolean run = false;
 	// 1草地，2铁墙，3砖头，4国王，5水，
 	static int[][] map1 = { // 第一关
@@ -57,28 +60,42 @@ public class Controler { // 关卡得分配置;
 		grade_stage = 0;
 		Demo.game.bomps.clear();
 		Demo.game.bullet.clear();
-		Demo.game.list.get(0).setTx(50);
-		Demo.game.list.get(0).setTy(300);
+		Demo.game.list.get(0).setTx(100);
+		Demo.game.list.get(0).setTy(500);
 		Demo.game.list2.clear();
 		Demo.game.list3.clear();
 		// 重置敌方坦克，我方坦克，子弹，移除所有未炸完的爆炸
 	}
 
 	public void change_stage(int map) {
+		while (Demo.controler.painting) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 		stage = 1;
 		prepare_chage_stage();
+		int[][] new_map = null;
 		switch (map) {
 		case 1:
-			Demo.game.map = map1;
+			new_map = map1;
 			break;
 		case 2:
-			Demo.game.map = map2;
+			new_map = map2;
 			break;
 		case 3:
-			Demo.game.map = map3;
+			new_map = map3;
 			break;
 		default:
 			break;
+		}
+		for (int i = 0; i < 15; i++) {
+			for (int j = 0; j < 15; j++) {
+				Demo.game.map[i][j] = new_map[i][j];
+			}
 		}
 		Tool.make_tank(1); // 先刷个三个出来
 		Tool.make_tank(2);
@@ -105,7 +122,7 @@ public class Controler { // 关卡得分配置;
 		switch (kind) {
 		case 1: // 死了一个狙击手
 			attck_num--;
-			if (attck_num != 0) // 有存量的话的造一个
+			if (attck_num > 0) // 有存量的话的造一个
 			{
 				Tool.make_tank(1);
 			}
@@ -113,14 +130,14 @@ public class Controler { // 关卡得分配置;
 
 		case 2:
 			tk_num--;
-			if (tk_num != 0) // 有存量的话的造一个
+			if (tk_num > 0) // 有存量的话的造一个
 			{
 				Tool.make_tank(2);
 			}
 			break;
 		case 3:
 			assa_num--;
-			if (assa_num != 0) // 有存量的话的造一个
+			if (assa_num > 0) // 有存量的话的造一个
 			{
 				Tool.make_tank(3);
 			}
@@ -139,8 +156,12 @@ public class Controler { // 关卡得分配置;
 	}
 
 	public void fail() {
+		Demo.controler.change_stage(1);
+		Demo.controler.run = false;
+		Demo.controler.grade = 0;
+		Demo.controler.kill_num = 0;
 		JOptionPane.showMessageDialog(null, "失败", "失败", JOptionPane.OK_OPTION);
-		System.exit(0);
+		Demo.controler.run = true;
 	}
 
 	public void success() {

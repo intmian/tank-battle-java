@@ -106,9 +106,8 @@ public class BaseTank { // 坦克类
 
 	public void die() {
 		Tool.bomp(tx, ty);
-		this.tx = 1000;
-		this.ty = 1000;
 		Demo.controler.fail();
+
 	}
 
 	public int getTx() {

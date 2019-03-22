@@ -9,14 +9,18 @@ public class EnemyTime extends Thread {
 
 	public void run() {
 		while (true) {
-			System.out.println(Demo.controler.run);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
 			if (Demo.controler.run == true)
 				break;
 		}
 		while (true) {
 
 			ArrayList<EnemyTank> et = Demo.game.getList3();
-			System.out.println(Demo.game.getList3().size());
 			for (int i = 0; i < et.size(); i++) { // 获取游戏中所有的地方坦克
 				et.get(i).touchMap(Demo.game.map); // 调用移动方法
 

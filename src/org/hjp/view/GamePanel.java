@@ -66,6 +66,15 @@ public class GamePanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g) {
+		while (Demo.controler.jumping) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
+		Demo.controler.painting = true;
 		super.paintComponent(g);
 		this.g = g;
 		// 绘制图片
@@ -75,7 +84,6 @@ public class GamePanel extends JPanel {
 
 		// 获取敌方坦克 并画出来
 		ArrayList<EnemyTank> list3 = Demo.game.getList3();
-		System.out.println(list3.size());
 		for (int i = 0; i < list3.size(); i++) {
 			EnemyTank et = list3.get(i);
 			String path = "img/e" + list3.get(i).getEdir() + ".png";
@@ -137,6 +145,7 @@ public class GamePanel extends JPanel {
 			if (bomps.get(i).end())
 				bomps.remove(i); // 炸完了
 		}
+		Demo.controler.painting = false;
 	}
 
 }
